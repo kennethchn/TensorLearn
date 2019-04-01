@@ -1,0 +1,11 @@
+变量赋初值很重要，千万不要全部给零，会导致不收敛
+tf.train.get_or_create_global_step()#获取global_step变量，如果没有创建一个
+tf.control_dependencies()#指定操作的依赖关系 
+tf.train.get_global_step()
+tf.losses.get_losses()
+tf.losses.get_total_losses()
+tf.errors.OutOfRangeError
+g.get_all_collection_keys()
+
+with tf.variable_scope(“xyz”) as scop:
+	a=tf.get_variable(“a”,shape=[2],trainable=False)

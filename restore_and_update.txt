@@ -1,0 +1,40 @@
+1. 如何在新图的基础上 只恢复 导入图的权重 ？
+
+用导入图的saver: saver_restore
+
+2. 如何只更新指定参数？
+
+用var_list = tf.contrib.framework.get_variables(scope_name)获取指定scope_name下的变量，
+
+然后optimizer.minimize()时传入指定var_list
+
+附：如何知道tensor名字以及获取指定变量？
+
+1.获取某个操作之后的输出
+
+用graph.get_operations()获取所有op
+
+比如<tf.Operation 'common_conv_xxx_net/common_conv_net/flatten/Reshape' type=Reshape>,
+
+那么output_pool_flatten = graph_restore.get_tensor_by_name('common_conv_xxx_net/common_conv_net/flatten/Reshape:0')就是那个位置经过flatten后的输出了
+
+2.获取指定的var的值
+
+用GraphKeys获取变量
+
+tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)返回指定集合的变量
+
+比如 <tf.Variable 'common_conv_xxx_net/final_logits/logits/biases:0' shape=(7,) dtype=float32_ref>
+
+那么var_logits_biases = graph_restore.get_tensor_by_name('common_conv_xxx_net/final_logits/logits/biases:0')就是那个位置的biases了
+
+3.获取指定scope的collection
+
+tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES,scope='common_conv_xxx_net.final_logits')
+
+注意后面的scope是xxx.xxx不是xxx/xxx
+--------------------- 
+作者：美利坚节度使 
+来源：CSDN 
+原文：https://blog.csdn.net/ying86615791/article/details/76215363 
+版权声明：本文为博主原创文章，转载请附上博文链接！
